@@ -99,8 +99,8 @@ def trace_ray(rayO, rayD):
     toL = 0
     # Iterate all light positions
     for elemento in L:
-	l = normalize(elemento - M)
-	toL = toL + l
+        l = normalize(elemento - M)
+        toL = toL + l
     #toL = normalize(L - M)
     toO = normalize(O - M)
     # Shadow: find if the point is shadowed or not.
@@ -115,7 +115,7 @@ def trace_ray(rayO, rayD):
     # Blinn-Phong shading (specular).
     # Iterate all colors
     for elemento in color_light:
-	col_ray += obj.get('specular_c', specular_c) * max(np.dot(N, normalize(toL + toO)), 0) ** specular_k * elemento
+        col_ray += obj.get('specular_c', specular_c) * max(np.dot(N, normalize(toL + toO)), 0) ** specular_k * elemento
     return obj, M, N, col_ray
 
 def add_sphere(position, radius, color):
@@ -159,6 +159,22 @@ img = np.zeros((h, w, 3))
 r = float(w) / h
 # Screen coordinates: x0, y0, x1, y1.
 S = (-1., -1. / r + .25, 1., 1. / r + .25)
+
+# Function to input values for command lines
+while(1):
+    print("Write camera (1 or 2) and press enter: ")
+    value = str(input())
+    if value == '1':
+        # Camera 1.
+        O = np.array([0., 0.35, -1.]) 
+        nameImage = 'fig-camera-1.png'
+        break
+    if value == '2':
+        # Camera 2.
+        O = np.array([0., 1., -1.])
+        nameImage = 'fig-camera-2.png'
+        break
+    print("Incorrect value. ")
 
 # Loop through all pixels.
 for i, x in enumerate(np.linspace(S[0], S[2], w)):
